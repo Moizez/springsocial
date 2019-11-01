@@ -2,23 +2,23 @@ package com.springsocial.model;
 
 public class UserDetails {
 	
-	private String firtName;
+	private String firstName;
 	private String lastName;
 	private String imageUrl;
 	
 	public UserDetails() {};
 	
-	public UserDetails(String firtName, String lastName, String imageUrl) {
+	public UserDetails(String firstName, String lastName, String imageUrl) {
 		super();
-		this.firtName = firtName;
+		this.firstName = firstName;
 		this.lastName = lastName;
 		this.imageUrl = imageUrl;
 	}
-	public String getFirtName() {
-		return firtName;
+	public String getFirstName() {
+		return firstName;
 	}
-	public void setFirtName(String firtName) {
-		this.firtName = firtName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 	public String getLastName() {
 		return lastName;
@@ -32,8 +32,6 @@ public class UserDetails {
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
-	
-	
 	
 
 }
