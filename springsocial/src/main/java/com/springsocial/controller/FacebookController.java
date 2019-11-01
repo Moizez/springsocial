@@ -24,7 +24,6 @@ public class FacebookController {
 	public RedirectView facebookLogin() {
 		RedirectView redirectview = new RedirectView();
 		String url = facebookService.facebookLogin();
-		System.out.println(url);
 		redirectview.setUrl(url);
 		return redirectview;
 	}
@@ -32,7 +31,7 @@ public class FacebookController {
 	@RequestMapping(value="/facebook")
 	public String facebook(@RequestParam("code") String code) {
 		String accessToken = facebookService.getFacebookAccessToken(code);
-		return "redirect:/facebookprofiledata/" + accessToken;		
+		return "redirect:/facebookprofiledata/"+accessToken;		
 	}
 	
 	@GetMapping(value="/facebookprofiledata/{accessToken:.+}")
@@ -40,7 +39,7 @@ public class FacebookController {
 		User user  = facebookService.getFacebookProfile(accessToken);
 		UserDetails userdetails = new UserDetails(user.getFirstName(), user.getLastName(), user.getCover().getSource());
 		model.addAttribute("user", userdetails);
-		return "/userprofile";		
+		return "view/userprofile";		
 		
 	}
 	
