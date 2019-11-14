@@ -11,7 +11,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import org.springframework.social.facebook.api.User;
 
-import com.springsocial.model.UserDetails;
+import com.springsocial.model.UserInfo;
 import com.springsocial.service.FacebookService;
 
 @Controller
@@ -37,8 +37,15 @@ public class FacebookController {
 	@GetMapping(value="/facebookprofiledata/{accessToken:.+}")
 	public String facebookprofiledata(@PathVariable String accessToken, Model model) {
 		User user  = facebookService.getFacebookProfile(accessToken);
-		UserDetails userdetails = new UserDetails(user.getFirstName(), user.getLastName(), user.getCover().getSource());
-		model.addAttribute("user", userdetails);
+		System.out.println(accessToken);
+		
+		if(user != null) {
+			UserInfo userinfo = new UserInfo(user.getFirstName(), user.getLastName(),"", user.getEmail());
+			System.out.println(userinfo.getFirstName());
+			 
+			model.addAttribute("user", userinfo);
+		}
+		
 		return "view/userprofile";		
 		
 	}
