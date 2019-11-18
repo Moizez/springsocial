@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
-<title>Insert title here</title>
+<title>Spring Social</title>
 <head>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" th:href="@{/css/style.css}">
@@ -13,7 +13,7 @@
 
    <div class="container">
     <div class="row">
-      <h2 style="text-align:center">Escolha uma rede social ou faça o login manualmente</h2>
+      <h2 style="text-align:center">Entre com sua rede social ou registre-se</h2>
       
       <div class="vl">
         <span class="vl-innertext">ou</span>
@@ -30,23 +30,18 @@
           </i> Entrar com o Google+
         </a>
       </div>
-      
-      <form action="/action_page.php">
-      
+            
         <div class="col">
-        <div class="hide-md-lg">
-          <p>Or sign in manually:</p>
-        </div>
-
-        <input type="text" name="username" placeholder="Usuário" required>
-        <input type="password" name="password" placeholder="Senha" required>
-        <input type="submit" value="Entrar">
-      </div>
-      </form>
-      
+        <div class="hide-md-lg"></div>
+      	<form th:action="@{'/register'}" th:object="${user}" method="POST">
+	      	<input type="text" name="firstName" placeholder="Nome" required="required" th:field="*{firstName}">
+	      	<input type="text" name="lastName" placeholder="Sobrenome" required="required" th:field="*{lastName}">
+	      	<input type="text" name="email" placeholder="E-mail" required="required" th:field="*{email}">
+	        <input type="password" name="password" placeholder="Senha" required="required" th:field="*{password}">
+	        <input type="submit" value="Registrar">      
+      	</form>
+      	</div>      
     </div>
-
-</div>        
-
+</div>
 </body>
 </html>
