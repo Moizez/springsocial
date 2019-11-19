@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
-<title>Insert title here</title>
+<title>Spring Social</title>
 <head>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" th:href="@{/css/style.css}">
@@ -14,7 +14,7 @@
     <div class="row">
       <h2 style="text-align:center">Spring Social - PROFILE</h2>
       <div class="vl">
-        <span class="vl-innertext">View</span>
+        <span class="vl-innertext">LOGADO</span>
       </div>
 
       <div class="col">
@@ -30,10 +30,15 @@
       </div>
 
       <div class="col">
-      	<img th:src="${user.imageUrl}" width="130" height="130"/>
+      	<img th:src="${user.imageUrl}" width="130" height="130" th:if="${user.imageUrl!=null}"/>
       	<h2 th:text="${user.firstName+' '+user.lastName}"></h2>
       	<h2 th:text="${user.email}"></h2>
+      	
+	      	<div>
+	      		<a th:href="@{'/'}" class="log-out-btn color-bg" style="background: #3AACED">Sair</a>
+	      	</div>      	
       </div>
+      
       
     </div>
   </form>

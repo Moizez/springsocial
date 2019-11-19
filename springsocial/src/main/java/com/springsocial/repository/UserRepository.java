@@ -9,5 +9,6 @@ import com.springsocial.model.UserInfo;
 public interface UserRepository extends CrudRepository<UserInfo, Long>{
 
 	UserInfo findByEmailAndEnable(String email, boolean enable);
+	UserInfo findByEmail(String email);
 
 }

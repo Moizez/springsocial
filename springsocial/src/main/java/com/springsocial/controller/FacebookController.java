@@ -1,6 +1,13 @@
 package com.springsocial.controller;
 
+import java.util.Collection;
+import java.util.Iterator;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,12 +20,15 @@ import org.springframework.social.facebook.api.User;
 
 import com.springsocial.model.UserInfo;
 import com.springsocial.service.FacebookService;
+import com.springsocial.service.SecurityService;
+import com.springsocial.service.UserService;
 
 @Controller
 public class FacebookController {
 	
-	@Autowired
-	private FacebookService facebookService;
+	@Autowired private FacebookService facebookService;
+	@Autowired private UserService userService;
+	@Autowired private SecurityService securityService;
 	
 	@GetMapping("/facebooklogin")
 	public RedirectView facebookLogin() {
@@ -35,18 +45,39 @@ public class FacebookController {
 	}
 	
 	@GetMapping(value="/facebookprofiledata/{accessToken:.+}")
-	public String facebookprofiledata(@PathVariable String accessToken, Model model) {
+	public String facebookprofiledata(@PathVariable String accessToken, Model model, HttpServletRequest request) {
 		User user  = facebookService.getFacebookProfile(accessToken);
-		System.out.println(accessToken);
+		UserInfo dbUser = userService.findByEmail(user.getEmail());
+		String role = "USER";		
 		
-		if(user != null) {
-			UserInfo userinfo = new UserInfo(user.getFirstName(), user.getLastName(),"", user.getEmail());
-			System.out.println(userinfo.getFirstName());
-			 
-			model.addAttribute("user", userinfo);
+		if(dbUser != null) {
+			dbUser.setFirstName(user.getFirstName());
+			dbUser.setLastName(user.getLastName());
+			dbUser.setImageUrl(user.getCover().getSource());
+			userService.update(dbUser);
+			role = dbUser.getRole();
+			model.addAttribute("user", dbUser);
+		}else {
+			UserInfo userInfo = new UserInfo(user.getFirstName(), user.getLastName(), " ", user.getEmail());
+			userInfo.setEmail(user.getEmail());
+			userInfo.setEnable(true);
+			userInfo.setRole("USER");
+			userService.save(userInfo);
+			role = userInfo.getRole();
+			model.addAttribute("user", userInfo);
 		}
 		
-		return "view/userprofile";		
+		securityService.autoLogin(user.getEmail(), null, role, request);
+		
+		String name = SecurityContextHolder.getContext().getAuthentication().getName();
+		Collection<? extends GrantedAuthority> grantedAuthorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+		Iterator<? extends GrantedAuthority> iterator = grantedAuthorities.iterator();
+		while(iterator.hasNext()) {
+			System.out.println(iterator.next());
+		}
+		
+		System.out.println(name);
+		return "view/userprofile";	
 		
 	}
 	
