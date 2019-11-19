@@ -13,13 +13,17 @@
 
    <div class="container">
     <div class="row">
-      <h2 style="text-align:center">Entre com sua rede social ou registre-se</h2>
+      <h2 style="text-align:center">Entre com sua rede social ou manualmente</h2>
       
       <div class="vl">
         <span class="vl-innertext">ou</span>
       </div>
       
-      <div class="col">
+      <div class="ul">
+        <span class="ul-innertext">ou</span>
+      </div>
+      
+       <div class="col">
         <a th:href="@{'/facebooklogin'}" class="fb btn">
           <i class="fa fa-facebook fa-fw"></i> Entrar com o Facebook
          </a>
@@ -30,9 +34,18 @@
           </i> Entrar com o Google+
         </a>
       </div>
+      
+      <div class="col">
+      	<div class="hide-md-lg"></div>
+      	<form th:action="@{'/login'}" method="POST">
+	      	<input type="text" name="email" placeholder="E-mail" required="required">
+	        <input type="password" name="password" placeholder="Senha" required="required">
+	        <input type="submit" value="Entrar">      
+      	</form>
+      </div>
             
-        <div class="col">
-        <div class="hide-md-lg"></div>
+      <div class="col">
+      	<div class="hide-md-lg"></div>
       	<form th:action="@{'/register'}" th:object="${user}" method="POST">
 	      	<input type="text" name="firstName" placeholder="Nome" required="required" th:field="*{firstName}">
 	      	<input type="text" name="lastName" placeholder="Sobrenome" required="required" th:field="*{lastName}">
@@ -40,7 +53,7 @@
 	        <input type="password" name="password" placeholder="Senha" required="required" th:field="*{password}">
 	        <input type="submit" value="Registrar">      
       	</form>
-      	</div>      
+      </div>      
     </div>
 </div>
 </body>
