@@ -42,7 +42,7 @@ public class RegistrationController {
 		}
 		
 		System.out.println(name);
-		return "view/userprofile";
+		return "redirect:/redirectdashboard";
 		
 	}
 	

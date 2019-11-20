@@ -11,7 +11,15 @@ public class HomeController {
 	
 	@GetMapping(value="/")
 	public String home(Model model) {
-		model.addAttribute("user", new UserInfo());		
+		model.addAttribute("user", new UserInfo());
+		model.addAttribute("errormessage");
+		return "/home";
+	}
+	
+	@GetMapping(value="/loginfailure")
+	public String loginfailure(Model model) {
+		model.addAttribute("user", new UserInfo());
+		model.addAttribute("errormessage", "Por favor, verifique seu e-mail ou senha!");
 		return "/home";
 	}
 

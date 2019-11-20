@@ -53,7 +53,7 @@ public class FacebookController {
 		if(dbUser != null) {
 			dbUser.setFirstName(user.getFirstName());
 			dbUser.setLastName(user.getLastName());
-			dbUser.setImageUrl(user.getCover().getSource());
+			//dbUser.setImageUrl(user.getCover().getSource());
 			userService.update(dbUser);
 			role = dbUser.getRole();
 			model.addAttribute("user", dbUser);
@@ -77,7 +77,7 @@ public class FacebookController {
 		}
 		
 		System.out.println(name);
-		return "view/userprofile";	
+		return "redirect:/redirectdashboard";	
 		
 	}
 	
